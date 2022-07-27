@@ -37,4 +37,17 @@ class YoutubeController extends AbstractController
             'youtubes' => $youtubeRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/{id}", name="app_video")
+     */
+    #[Route('/{id}', name: 'app_video')]
+
+    public function video(Youtube $youtube): Response
+    {
+        return $this->render('youtube/video.html.twig', [
+            'name' => $youtube->getName(),
+            'url' => $youtube->getUrl(),
+        ]);
+    }
 }
