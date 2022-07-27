@@ -38,9 +38,6 @@ class YoutubeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="app_video")
-     */
     #[Route('/{id}', name: 'app_video')]
 
     public function video(Youtube $youtube): Response

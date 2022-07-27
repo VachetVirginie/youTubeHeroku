@@ -5,11 +5,13 @@ namespace App\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+
 use RicardoFiorani\Matcher\VideoServiceMatcher;
+
 
 class YoutubeExtension extends AbstractExtension
 {
-    private VideoServiceMatcher $youtubeParser;
+    private $youtubeParser;
 
     public function __construct()
     {
@@ -21,8 +23,9 @@ class YoutubeExtension extends AbstractExtension
         return [
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
-            // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
+            // Reference: https://twig.symfony.com/doc/3.x/advanced.html#automatic-escaping
             new TwigFilter('youtube_thumbnail', [$this, 'youtubeThumbnail']),
+            new TwigFilter('youtube_player', [$this, 'youtubePlayer']),
         ];
     }
 
@@ -39,9 +42,11 @@ class YoutubeExtension extends AbstractExtension
         return $video->getLargestThumbnail();
     }
 
+
     public function youtubePlayer($value): string
     {
         $video = $this->youtubeParser->parse($value);
         return $video->getEmbedCode('100%', 500, true, true);
     }
+
 }
