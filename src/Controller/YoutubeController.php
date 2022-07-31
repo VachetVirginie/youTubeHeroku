@@ -47,4 +47,14 @@ class YoutubeController extends AbstractController
             'url' => $youtube->getUrl(),
         ]);
     }
+
+    /**
+     * @Route("/{id}/delete", name="video_delete", methods={"get","delete"})
+     */
+    public function deleteVideo(Youtube $youtube, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($youtube);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_home');
+    }
 }
